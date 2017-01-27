@@ -40,7 +40,6 @@ twig:
     strict_variables: "%kernel.debug%"
     globals:
         webmaster:   %app_webmaster%
-        app_name:    %app_name%
 
 # Doctrine Configuration
 doctrine:
