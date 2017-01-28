@@ -3,6 +3,7 @@
 namespace OC\PlatformBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class AdvertController extends Controller
@@ -43,13 +44,25 @@ class AdvertController extends Controller
         // Ici, on récupérera l'annonce correspondante à $id
 
         // Même mécanisme que pour l'ajout
+        /*
         if ($request->isMethod('POST')) {
             $request->getSession()->getFlashBag()->add('notice', 'Annonce bien modifiée.');
 
             return $this->redirectToRoute('oc_platform_view', array('id' => 5));
         }
+    */
 
-        return $this->render('OCPlatformBundle:Advert:edit.html.twig');
+        $advert = array(
+            'title' => 'Recherche developpeur Symfony',
+            'id' => $id,
+            'author' => 'Alexandre',
+            'content' => 'Nous recherchons un développeur Symfony débutant sur Lyon. BlaBlaBla ...',
+            'date' => new \Datetime()
+        );
+
+        return $this->render('OCPlatformBundle:Advert:edit.html.twig', array(
+            'advert' => $advert
+        ));
     }
     /*
         indexAction

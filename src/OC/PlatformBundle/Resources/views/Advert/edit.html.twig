@@ -4,7 +4,7 @@
 	Modifier une annonce - {{ parent() }}
 {% endblock %}
 
-{% block ocplatform_edit %}
+{% block ocplatform_body %}
 
 	<h2>Modifier une annonce</h2>
 
@@ -17,7 +17,7 @@
 
 	<p>
 		<a href=" path('oc_plateform_view', {'id' : advert.id}) " class="btn btn-default">
-			<i>glyphicon glyphicon-chevron-left</i>
+			<i class="glyphicon glyphicon-chevron-left"></i>
 			Retour à l'annonce
 		</a>
 	</p>
