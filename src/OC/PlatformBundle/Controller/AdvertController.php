@@ -17,6 +17,7 @@ class AdvertController extends Controller
         // Si la requête est en POST, c'est que le visiteur a soumis le formulaire
         if ($request->isMethod('POST')) {
             // Ici, on s'occupera de la création et de la gestion du formulaire
+            // Mais ce sera plus tard bien sur
             $request->getSession()->getFlashBag()->add('notice', 'Annonce bien enregistrée.');
             // Puis on redirige vers la page de visualisation de cette annonce
             return $this->redirectToRoute('oc_platform_view', array('id' => 5));
