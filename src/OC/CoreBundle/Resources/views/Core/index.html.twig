@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+
+		<title>{% block occore_title %}OC Plateforme{% endblock %}</title>
+
+		{% block stylesheets %}
+		{# On charge le CSS de bootstrap depuis le site directement #}
+			<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" media="screen" title="no title" charset="utf-8">
+		{% endblock %}
+	</head>
+	<body>
+		<div class="container">
+			<div id="header" class="jumbotron">
+				<h1 class="text-center">Page d'accueil de notre site</h1>
+				<p>
+					Ce projet est propulsé par Symfony,
+					et construit grace au MOOC OpenClassrooms et SensioLabs.
+				</p>
+				<p class="text-center">
+					<a class="bt btn-primary btn-lg" href="https://openclassrooms.com/courses/developpez-votre-site-web-avec-le-framework-symfony2">
+						Participer au MOOC >>
+					</a>
+				</p>
+			</div>
+			<div class="row">
+				{% for message in app.session.flashbag.get('info') %}
+					<p class="alert alert-info">
+						Message flash : {{ message }}
+					</p>
+				{% endfor %}
+				<div id="menu" class="col-md-3">
+					<h3>Liens utiles</h3>
+					<ul class="nav nav-pills nav-stacked">
+						<li><a href="{{ path('oc_platform_home') }}">Liste des annonces</a></li>
+					</ul>
+					<ul class="nav nav-pills nav-stacked">
+						<li><a href="{{ path('oc_core_contact') }}">Contact</a></li>
+					</ul>
+				</div>
+				<div id="content" class="col-md-9">
+						<h2>Les 3 dernières annonces</h2>
+						<ul>
+							{% for advert in listAdverts %}
+								<li>
+									<a href="{{ path('oc_platform_view', {'id': advert.id}) }}">
+										{{ advert.title }},
+									</a>
+									par {{ advert.author }}
+									le {{ advert.date|date('d/m/Y') }}
+								</li>
+							{% endfor %}
+						</ul>
+				</div>
+			</div>
+
+			<hr>
+
+			<footer>
+				<p>The sky's the limit © {{ 'now'|date('Y') }} and beyond.</p>
+			</footer>
+		</div>
+
+		{% block javascripts %}
+			{# Ajoutez ces lignes Javascript si vous vous servir des fonctionnalités du Bootstrap Twitter #}
+			<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+			<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+		{% endblock %}
+
+	</body>
+</html>

@@ -1,5 +1,7 @@
 <?php
 
+// src/OC/PlatformBundle/Controller/AdvertController.php
+
 namespace OC\PlatformBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -8,151 +10,106 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class AdvertController extends Controller
 {
-	/*
-		addAction
-	 */
-	public function addAction(Request $request)
-	{
-		/*
-		// La gestion d'un formulaire est particulière, mais l'idée est la suivante :
-		// Si la requête est en POST, c'est que le visiteur a soumis le formulaire
-		if ($request->isMethod('POST')) {
-			// Ici, on s'occupera de la création et de la gestion du formulaire
-			// Mais ce sera plus tard bien sur
-			$request->getSession()->getFlashBag()->add('notice', 'Annonce bien enregistrée.');
-			// Puis on redirige vers la page de visualisation de cette annonce
-			return $this->redirectToRoute('oc_platform_view', array('id' => 5));
-		}
+  public function indexAction($page)
+  {
+    if ($page < 1) {
+      throw new NotFoundHttpException('Page "'.$page.'" inexistante.');
+    }
 
-		// Si on n'est pas en POST, alors on affiche le formulaire
-		return $this->render('OCPlatformBundle:Advert:add.html.twig');
-		*/
+    // Notre liste d'annonce en dur
+    $listAdverts = array(
+      array(
+        'title'   => 'Recherche développpeur Symfony',
+        'id'      => 1,
+        'author'  => 'Alexandre',
+        'content' => 'Nous recherchons un développeur Symfony débutant sur Lyon. Blabla…',
+        'date'    => new \Datetime()),
+      array(
+        'title'   => 'Mission de webmaster',
+        'id'      => 2,
+        'author'  => 'Hugo',
+        'content' => 'Nous recherchons un webmaster capable de maintenir notre site internet. Blabla…',
+        'date'    => new \Datetime()),
+      array(
+        'title'   => 'Offre de stage webdesigner',
+        'id'      => 3,
+        'author'  => 'Mathieu',
+        'content' => 'Nous proposons un poste pour webdesigner. Blabla…',
+        'date'    => new \Datetime())
+    );
 
-		// On récupère le service
-		$antispam = $this->container->get('oc_platform.antispam');
+    return $this->render('OCPlatformBundle:Advert:index.html.twig', array(
+      'listAdverts' => $listAdverts,
+    ));
+  }
 
-		// Je pars du principe que $text contient le texte d'un message quelconque
-		$text = '...';
-		if ($antispam->isSpam($text)) {
-			throw new \Exception("Votre message a été détecté comme spam !");
-		}
+  public function viewAction($id)
+  {
+    $advert = array(
+      'title'   => 'Recherche développpeur Symfony',
+      'id'      => $id,
+      'author'  => 'Alexandre',
+      'content' => 'Nous recherchons un développeur Symfony débutant sur Lyon. Blabla…',
+      'date'    => new \Datetime()
+    );
 
-		// Ici le message n'est pas un spam
-	}
-	/*
-		deleteAction
-	 */
-	public function deleteAction($id)
-	{
-		// Ici, on récupérera l'annonce correspondant à $id
+    return $this->render('OCPlatformBundle:Advert:view.html.twig', array(
+      'advert' => $advert
+    ));
+  }
 
-			// Ici, on gérera la suppression de l'annonce en question
+  public function addAction(Request $request)
+  {
+    // Si la requête est en POST, c'est que le visiteur a soumis le formulaire
+    if ($request->isMethod('POST')) {
+      $request->getSession()->getFlashBag()->add('notice', 'Annonce bien enregistrée.');
 
-			return $this->render('OCPlatformBundle:Advert:delete.html.twig');
-	}
-	/*
-		editAction
-	 */
-	public function editAction($id, Request $request)
-	{
-		// Ici, on récupérera l'annonce correspondante à $id
+      // Puis on redirige vers la page de visualisation de cettte annonce
+      return $this->redirectToRoute('oc_platform_view', array('id' => 5));
+    }
 
-		// Même mécanisme que pour l'ajout
-		/*
-		if ($request->isMethod('POST')) {
-			$request->getSession()->getFlashBag()->add('notice', 'Annonce bien modifiée.');
+    // Si on n'est pas en POST, alors on affiche le formulaire
+    return $this->render('OCPlatformBundle:Advert:add.html.twig');
+  }
 
-			return $this->redirectToRoute('oc_platform_view', array('id' => 5));
-		}
-	*/
+  public function editAction($id, Request $request)
+  {
+    if ($request->isMethod('POST')) {
+      $request->getSession()->getFlashBag()->add('notice', 'Annonce bien modifiée.');
 
-		$advert = array(
-			'title' => 'Recherche developpeur Symfony',
-			'id' => $id,
-			'author' => 'Alexandre',
-			'content' => 'Nous recherchons un développeur Symfony débutant sur Lyon. BlaBlaBla ...',
-			'date' => new \Datetime()
-		);
+      return $this->redirectToRoute('oc_platform_view', array('id' => 5));
+    }
 
-		return $this->render('OCPlatformBundle:Advert:edit.html.twig', array(
-			'advert' => $advert
-		));
-	}
-	/*
-		indexAction
-	 */
-	public function indexAction($page)
-	{
-		// On ne sait pas combien de pages il y a
-		// Mais on sait qu'une page doit être supérieure ou égale à 1
-		if ($page < 1) {
-			// On déclenche une exception NotFoundHttpException, cela va afficher
-			// une page d'erreur 404 (qu'on pourra personnaliser plus tard d'ailleurs)
-			throw new NotFoundHttpException('Page "'.$page.'" inexistante.');
-			$mailer = $this->container->get('mailer');
-		}
+    $advert = array(
+      'title'   => 'Recherche développpeur Symfony',
+      'id'      => $id,
+      'author'  => 'Alexandre',
+      'content' => 'Nous recherchons un développeur Symfony débutant sur Lyon. Blabla…',
+      'date'    => new \Datetime()
+    );
 
-		// Notre liste en dur
-	$listAdverts = array(
-		array(
-			'title'   => 'Recherche développpeur Symfony',
-			'id'      => 1,
-			'author'  => 'Alexandre',
-			'content' => 'Nous recherchons un développeur Symfony débutant sur Lyon. Blabla…',
-			'date'    => new \Datetime()),
-		array(
-			'title'   => 'Mission de webmaster',
-			'id'      => 2,
-			'author'  => 'Hugo',
-			'content' => 'Nous recherchons un webmaster capable de maintenir notre site internet. Blabla…',
-			'date'    => new \Datetime()),
-		array(
-				'title'   => 'Offre de stage webdesigner',
-				'id'      => 3,
-				'author'  => 'Mathieu',
-				'content' => 'Nous proposons un poste pour webdesigner. Blabla…',
-				'date'    => new \Datetime())
-	);
+    return $this->render('OCPlatformBundle:Advert:edit.html.twig', array(
+      'advert' => $advert
+    ));
+  }
 
-		// Et modifiez le 2nd argument pour injecter notre liste
-		return $this->render('OCPlatformBundle:Advert:index.html.twig', array(
-			'listAdverts' => $listAdverts
-		));
-	}
-	/*
-		menuAction
-	 */
-	public function menuAction($limit)
-	{
-		// On préfixe en dur une liste ici, bien entendu par la suite
-		// on la récupérera depuis la base de données
-		$listAdverts = array(
-			array('id' => 2, 'title' => 'Recherche développeur Symfony'),
-			array('id' => 5, 'title' => 'MIssion de webmaster'),
-			array('id' => 9, 'title' => 'Offre de stage webdesigner')
-		);
+  public function deleteAction($id)
+  {
+    return $this->render('OCPlatformBundle:Advert:delete.html.twig');
+  }
 
-		return $this->render('OCPlatformBundle:Advert:menu.html.twig', array(
-			// Tout l'intéret est ici, le controlleur passe
-			// les variables nécessaires au template
-			'listAdverts' => $listAdverts
-		));
-	}
-	/*
-		viewAction
-	 */
-	public function viewAction($id)
-	{
-		$advert = array(
-			'title' => 'Recherche développeur Symfony 2',
-			'id' => $id,
-			'author' => 'Alexandre',
-			'content' => 'Nous recherchons un développeur Symfony 2 débutant sur Lyon. bla bla bla ...',
-			'date' => new \Datetime()
-		);
+  public function menuAction($limit)
+  {
+    // On fixe en dur une liste ici, bien entendu par la suite on la récupérera depuis la BDD !
+    $listAdverts = array(
+      array('id' => 2, 'title' => 'Recherche développeur Symfony'),
+      array('id' => 5, 'title' => 'Mission de webmaster'),
+      array('id' => 9, 'title' => 'Offre de stage webdesigner')
+    );
 
-		return $this->render('OCPlatformBundle:Advert:view.html.twig', array(
-				'advert' => $advert
-			));
-	}
+    return $this->render('OCPlatformBundle:Advert:menu.html.twig', array(
+      // Tout l'intérêt est ici : le contrôleur passe les variables nécessaires au template !
+      'listAdverts' => $listAdverts
+    ));
+  }
 }
