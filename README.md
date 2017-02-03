@@ -39,3 +39,5 @@ Publiez les assets dans le répertoire web :
     php bin/console assets:install web
 
 ## Et profitez !
+
+http://exercices.openclassrooms.com/assessment/correction/204654?login=7990818&tk=de58aa455e5d736ef8caf22358eb7cf0&sbd=2016-02-01&sbdtk=fa78d6dd3126b956265a25af9b322d55
