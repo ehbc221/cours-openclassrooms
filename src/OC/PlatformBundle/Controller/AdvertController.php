@@ -42,7 +42,6 @@ class AdvertController extends Controller
 			'listAdverts' => $listAdverts,
 		));
 	}
-
 	public function viewAction($id)
 	{
 		$advert = array(
@@ -52,7 +51,6 @@ class AdvertController extends Controller
 			'content' => 'Nous recherchons un développeur Symfony débutant sur Lyon. Blabla…',
 			'date'    => new \Datetime()
 		);
-
 		return $this->render('OCPlatformBundle:Advert:view.html.twig', array(
 			'advert' => $advert
 		));
@@ -71,7 +69,6 @@ class AdvertController extends Controller
 		// Si on n'est pas en POST, alors on affiche le formulaire
 		return $this->render('OCPlatformBundle:Advert:add.html.twig');
 	}
-
 	public function editAction($id, Request $request)
 	{
 		if ($request->isMethod('POST')) {
@@ -79,7 +76,6 @@ class AdvertController extends Controller
 
 			return $this->redirectToRoute('oc_platform_view', array('id' => 5));
 		}
-
 		$advert = array(
 			'title'   => 'Recherche développpeur Symfony',
 			'id'      => $id,
@@ -87,17 +83,14 @@ class AdvertController extends Controller
 			'content' => 'Nous recherchons un développeur Symfony débutant sur Lyon. Blabla…',
 			'date'    => new \Datetime()
 		);
-
 		return $this->render('OCPlatformBundle:Advert:edit.html.twig', array(
 			'advert' => $advert
 		));
 	}
-
 	public function deleteAction($id)
 	{
 		return $this->render('OCPlatformBundle:Advert:delete.html.twig');
 	}
-
 	public function menuAction($limit)
 	{
 		// On fixe en dur une liste ici, bien entendu par la suite on la récupérera depuis la BDD !
@@ -106,7 +99,6 @@ class AdvertController extends Controller
 			array('id' => 5, 'title' => 'Mission de webmaster'),
 			array('id' => 9, 'title' => 'Offre de stage webdesigner')
 		);
-
 		return $this->render('OCPlatformBundle:Advert:menu.html.twig', array(
 			// Tout l'intérêt est ici : le contrôleur passe les variables nécessaires au template !
 			'listAdverts' => $listAdverts
