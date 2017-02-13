@@ -8,12 +8,10 @@ use Symfony\Component\HttpFoundation\Request;
 
 class CoreController extends Controller
 {
-
 	public function indexAction()
 	{
 		return $this->render('OCCoreBundle:Core:index.html.twig');
 	}
-
 	public function contactAction(Request $request)
 	{
 		$session = $request
@@ -23,5 +21,4 @@ class CoreController extends Controller
 
 		return $this->redirectToRoute('oc_core_home');
 	}
-
 }
