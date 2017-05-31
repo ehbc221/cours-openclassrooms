@@ -1,0 +1,10 @@
+- Télécharer composer.phar, puis le copier dans le repertoire ou l'on veut créer le projet
+- Dans un terminal, ouvrir ce meme repertoire
+- Taper " php -r "readfile('https://symfony.com/installer');" > symfony " pour télécharger l'installateur "symfony"
+- Puis " composer create-project symfony/framework-standard-edition my_project_name " pour créer le dossier du projet "my_project_name" avec symfony
+- Pour lancer le server, se pointer sur le dossier du projet puis taper : " php bin/console server:run  "
+- Commencer un nouveau dépot Git :
+	git init
+	git add .
+	git status
+	git commit
